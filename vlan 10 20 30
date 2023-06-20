@@ -1,0 +1,64 @@
+#VLAN 10 20 30 
+
+#all 3 Switch with pcs
+VLAN 10 :
+#same code for vlan 10 20 as well as 30
+
+Switch>enable
+Switch#config t
+Switch(config)#vlan 10
+Switch(config-vlan)#vl 20
+Switch(config-vlan)#vl 30 #Ctrl Z
+Switch#show vlan b
+
+#To Name the different VLans
+Switch#config t
+Switch(config)#vlan 10
+Switch(config-vlan)#name Students
+Switch(config-vlan)#vlan 20
+Switch(config-vlan)#name faculty
+Switch(config-vlan)#vl 30 
+Switch(config-vlan)#name guest
+Switch(config-vlan)#exit
+Switch(config)#exit
+Switch#show vl brief
+
+#To configure different ports to pc
+Switch#config t
+Switch(config)#interface fastEthernet 0/1
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#^Z
+Switch#show vl brief
+Switch#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#interface range fastethernet 0/1-3
+Switch(config-if-range)#switchport mode trunk
+Switch(config-if-range)#^Z
+Switch#show vlan brief
+
+
+Router 
+Router>enable
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface gigabitethernet 0/0.10
+Router(config-subif)#encapsulation dot1Q 10
+Router(config-subif)#ip address 192.18.10.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#interface gigabitethernet 0/0.20
+Router(config-subif)#encapsulation dot1Q 20
+Router(config-subif)#ip address 192.168.20.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#interface gigabitethernet 0/0.30
+Router(config-subif)#encapsulation dot1Q 30
+Router(config-subif)#ip address 192.168.30.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#^Z
+Router#show ip interface brief
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface gigabitethernet 0/0
+Router(config-if)#no shutdown
+Router#show ip interface brief
+
